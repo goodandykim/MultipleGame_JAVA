@@ -1,0 +1,210 @@
+package Prototype;
+
+import java.util.Scanner;
+import java.util.Random;
+
+public class prototype {
+	//Var
+	int stsel;
+	static int goal;
+	static int point;
+	static int now = 0;
+	static int fail;
+	static int success;
+	static int time;
+	static int dan;
+	static int rans = dan * time;
+	static int ans;
+	static int bon;
+	static int howt;
+	
+	//timer
+	static int timerBuffer;
+	static int ht = 1;
+	
+	public void c() {
+		howt = timerBuffer / now;
+	}
+	
+	//settings
+	public void stm() throws InterruptedException {//start or watch math
+		//stm = 1 = 게임 런처로 가기
+		//stm = 0 = 구구단 보기
+		Scanner stmsc = new Scanner(System.in);
+		System.out.println("구구단을 보려면 0을, 게임을 시작하려면 1을 입력하세요");
+		stsel = stmsc.nextInt();
+		System.out.println();
+		System.out.println();
+		
+		if (stsel == 1) {
+			System.out.println("목표점수를 설정하세요 (10단은 2점이며 감점이 없고, 1~9단은 1점이 주어집니다,또한 오답시 1점 감점입니다)");
+			goal = stmsc.nextInt();
+			System.out.println("목표점수가 설정되었습니다 : '" + goal + "점'");
+			System.out.println("게임을 시작합니다");
+			System.out.println("3");
+			Thread.sleep(1000);
+			System.out.println("2");
+			Thread.sleep(1000);
+			System.out.println("1");
+			System.out.println("게임시작!");
+		}
+		if (stsel == 0) {
+			System.out.println("구구단 게임 _ 구구단을 표시합니다");
+			prototype mtp = new prototype();
+			mtp.multiples();
+			
+			System.out.println("");
+			System.out.println("확인이 끝났다면 목표점수를 설정하세요 (10단은 2점이며 감점이 없고, 1~9단은 1점이 주어집니다,또한 오답시 1점 감점입니다)");
+			goal = stmsc.nextInt();
+			System.out.println("목표점수가 설정되었습니다 : '" + goal + "점'");
+			System.out.println("게임을 시작합니다");
+			System.out.println("3");
+			Thread.sleep(1000);
+			System.out.println("2");
+			Thread.sleep(1000);
+			System.out.println("1");
+			System.out.println("게임시작!");
+			ht = 0;
+		}
+	}
+	
+	//Multiplies Class
+	public void multiples() {
+		for(int dan = 1; dan <= 9; dan++) {
+			for(int times = 1; times <= 9; times++) {
+				System.out.println(dan + " X " + times + " = " + dan * times);
+			}
+			System.out.println();
+		}
+	}
+	
+	//launcher Class
+	public void launcher() throws InterruptedException {
+		prototype Slogo = new prototype();
+		Slogo.logo();//Showing logo
+		
+		System.out.println();
+		System.out.println();
+		
+		//set
+		prototype set = new prototype();
+		set.stm();
+	}
+	
+	//Show Logo Function(Class)
+	public void logo() {
+		System.out.println("|==========================================|");
+		System.out.println("|                                          |");
+		System.out.println("|                 구구단 게임                 |");
+		System.out.println("|                                          |");
+		System.out.println("|==========================================|");
+	}
+	
+	public void maker() {
+		int d;
+		int t;
+		Random rd = new Random();
+		d = rd.nextInt(10)+1;
+		t = rd.nextInt(9)+1;
+		dan = d;
+		time = t;
+	}
+	
+	public void quest() {
+		//No 10
+		now++;//문제수1
+		Scanner qsc = new Scanner(System.in);
+		System.out.println(now + "번. 일반 문제입니다. (정답시 1점 획득, 오답시 1점 감점)");
+		System.out.println("");
+		System.out.println(dan + " X " + time + " = ?");
+		ans = qsc.nextInt();
+		rans = dan * time;
+		System.out.println("");
+		if(ans == rans) {
+			point++;//포인트1
+			System.out.println("정답입니다! (1점 획득)");
+			System.out.println("[현재점수 : '" + point + "']");
+			System.out.println("");
+			System.out.println("");
+			success++;//정답수 증가1
+		}
+		else {
+			point--;//1점 감점
+			System.out.println("오답입니다! (1점 감점)");
+			System.out.println("[현재점수 : '" + point + "']");
+			System.out.println("");
+			System.out.println("");
+			fail++;//오답수증가1
+		}
+	}
+	
+	public void ten() {
+		//True 10'
+		now++;//문제수1
+		Scanner qsc = new Scanner(System.in);
+		System.out.println(now + "번. 10단 문제입니다. (정답시 2점 획득, 오답시 감점없음)");
+		System.out.println("");
+		System.out.println(dan + " X " + time + " = ?");
+		ans = qsc.nextInt();
+		rans = dan * time;
+		System.out.println("");
+		if(ans == rans) {
+			point++;//포인트1
+			point++;//포인트2
+			System.out.println("정답입니다! (2점 획득)");
+			System.out.println("[현재점수 : '" + point + "']");
+			System.out.println("");
+			System.out.println("");
+			success++;//정답수 증가1
+		}
+		else {
+			System.out.println("오답입니다! (감점없음)");
+			System.out.println("[현재점수 : '" + point + "']");
+			System.out.println("");
+			System.out.println("");
+			fail++;//오답수증가1
+		}
+	}
+	
+	public void ending() {
+		System.out.println("======<목표점수에 도달하여 게임을 종료합니다>======");
+		System.out.println("<<통계>>");
+		System.out.println("[점수] : " + point + " / " + goal);
+		System.out.println("[총 문제 수] : " + now);
+		System.out.println("[정답 수] : " + success);
+		System.out.println("[오답 수] : " + fail);
+		
+		System.out.println("");
+	}
+	static int re;
+	//Main Class
+	public static void main(String[] args) throws InterruptedException {
+		prototype Launching = new prototype();
+		Launching.launcher();
+		prototype game = new prototype();
+		System.out.println();
+		System.out.println();
+		int a = 0;
+		while(ht == 0) {
+			timerBuffer++;
+			Thread.sleep(1000);
+		}
+		while(a == 0) {
+			game.maker();
+			switch(dan) {
+			case 10:
+				game.ten();
+			default:
+				game.quest();
+			}
+			if(point == goal) {
+				a = 1;
+				ht = 1;
+			}
+		}
+		System.out.println();
+		System.out.println();
+		game.ending();
+		System.out.println("");
+	}
+}
